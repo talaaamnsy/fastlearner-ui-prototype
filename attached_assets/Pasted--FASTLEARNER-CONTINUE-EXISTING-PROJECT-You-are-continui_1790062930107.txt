@@ -1,0 +1,635 @@
+# FASTLEARNER — CONTINUE EXISTING PROJECT
+
+You are continuing development of an existing application called **FastLearner**.
+
+IMPORTANT:
+
+This is NOT a new project.
+
+The existing FastLearner codebase was originally created using an AI app builder and is already connected to a private GitHub repository.
+
+**DO NOT rebuild the application from scratch.**
+
+First inspect and understand the existing codebase, routes, components, styling, mock data, and current functionality.
+
+Preserve the existing design language and working functionality unless explicitly instructed to change them.
+
+FastLearner is now transitioning from a UI prototype into a functional learning and question-drilling platform.
+
+---
+
+# 1. PRODUCT PURPOSE
+
+FastLearner is a clean, lightweight learning and practice application for:
+
+* SKD
+* UTBK
+* Psikotes
+* TPA
+* TBI
+
+The application is intended to support:
+
+* learning
+* question practice
+* custom drills
+* review of incorrect questions
+* mastery tracking
+* performance analytics
+* personalized practice
+* user profiles and targets
+
+The application should feel like a polished modern iPhone-inspired productivity/learning app.
+
+It must NOT look like a typical colorful gamified education platform.
+
+---
+
+# 2. EXISTING UI MUST BE PRESERVED
+
+Do not redesign the application from scratch.
+
+Keep the existing:
+
+* navigation structure
+* page structure
+* component architecture where reasonable
+* spacing philosophy
+* rounded cards
+* typography hierarchy
+* clean layout
+* minimal visual style
+* existing interactions that already work
+
+Improve and extend the existing implementation instead of replacing it unnecessarily.
+
+---
+
+# 3. VISUAL DESIGN
+
+The visual direction is:
+
+**Minimal, premium, Apple/iPhone-inspired, calm and clean.**
+
+Use:
+
+* generous whitespace
+* strong typography hierarchy
+* bold headings
+* clean body typography
+* rounded corners
+* pill-shaped primary actions
+* subtle shadows
+* subtle borders
+* smooth transitions
+* restrained colors
+* minimal visual noise
+
+Headings and important numerical/statistical values should generally use stronger/bolder typography.
+
+Avoid:
+
+* excessive gradients
+* excessive colorful cards
+* excessive shadows
+* overly gamified UI
+* unnecessary decorative elements
+* clutter
+
+---
+
+# 4. LIGHT MODE AND DARK MODE
+
+Implement a complete theme system with:
+
+### Light Mode
+
+* warm white / off-white background
+* white surfaces
+* neutral gray secondary elements
+* dark text
+* restrained warm brown accent
+
+### Dark Mode
+
+Do NOT simply invert the colors.
+
+Use:
+
+* deep charcoal background
+* subtle dark-brown surfaces
+* warm/dark-brown accent
+* comfortable off-white text
+* appropriate muted secondary text
+
+The dark mode should feel premium, calm, and readable.
+
+The user must be able to switch between:
+
+* Light
+* Dark
+* System
+
+Persist the user's preference.
+
+---
+
+# 5. EXAM STRUCTURE
+
+FastLearner has five main exam categories.
+
+## SKD
+
+### TWK
+
+* Nasionalisme
+* Integritas
+* Bela Negara
+* Pilar Negara
+* Bahasa Negara
+
+### TIU
+
+* Verbal Analogi
+* Verbal Silogisme
+* Verbal Analitis
+* Numerik Berhitung
+* Numerik Deret Angka
+* Numerik Perbandingan Kuantitatif
+* Numerik Soal Cerita
+* Figural Analogi
+* Figural Ketidaksamaan
+* Figural Serial
+
+### TKP
+
+* Pelayanan Publik
+* Jejaring Kerja
+* Sosial Budaya
+* Teknologi Informasi dan Komunikasi
+* Profesionalisme
+* Anti Radikalisme
+
+IMPORTANT:
+
+These are the final selectable material levels.
+
+Do NOT create another sub-material layer underneath them.
+
+Example:
+
+SKD → TIU → Numerik Berhitung → Questions
+
+---
+
+# 6. UTBK
+
+In the user interface, do NOT create TPS or Tes Literasi as additional navigation layers.
+
+Show the seven subtests directly:
+
+* PU
+* PPU
+* PBM
+* PK
+* LBI
+* LBE
+* PM
+
+Each subtest can contain its own questions and metadata.
+
+---
+
+# 7. ADDITIONAL EXAM TYPES
+
+Add:
+
+## PSIKOTES
+
+Support categories such as:
+
+* Verbal
+* Numerik
+* Logika
+* Analogi
+* Deret
+* Ketelitian
+* Spasial/Figural
+* Kepribadian
+
+Note that personality-style questions may not have a single correct answer and should not be forced into a normal right/wrong question model.
+
+## TPA
+
+Support:
+
+* Verbal
+* Numerik
+* Logika
+* Figural/Spasial
+
+## TBI
+
+Treat TBI as a separate exam category and keep its question taxonomy flexible so additional categories can be added later.
+
+---
+
+# 8. QUESTION DATA MUST NOT BE HARDCODED INTO UI
+
+This is extremely important.
+
+Questions must be treated as DATA.
+
+Do not hardcode large question arrays directly inside page components.
+
+Create a proper question/data architecture that can later connect to a real database.
+
+Every question should support at minimum:
+
+* id
+* exam
+* subtest
+* material
+* question_type
+* difficulty
+* question
+* option_a
+* option_b
+* option_c
+* option_d
+* option_e
+* correct_answer
+* explanation
+* estimated_time
+* tags
+* status
+
+---
+
+# 9. QUESTION TIMING
+
+Every question must have:
+
+**estimated_time**
+
+This represents the recommended/target time to solve the question.
+
+Example:
+
+estimated_time: 30 seconds
+
+Separately track:
+
+**time_taken**
+
+This represents the actual amount of time the user spent answering the question.
+
+Do NOT mix these two values.
+
+This data should later support analytics such as:
+
+* target time
+* actual time
+* average time
+* speed performance
+
+---
+
+# 10. QUESTION ENGINE
+
+Implement a functional question flow:
+
+Question
+→ select answer
+→ submit
+→ correct/incorrect feedback
+→ explanation
+→ optional Needs Review
+→ next question
+→ finish drill
+→ drill summary
+
+Support:
+
+* one question at a time
+* question numbering
+* A–E options
+* answer state
+* correct/incorrect feedback
+* explanation
+* estimated time
+* actual timer
+* next question
+* drill completion
+
+---
+
+# 11. NEEDS REVIEW
+
+Implement the concept of:
+
+**Needs Review**
+
+Incorrect answers should be recorded.
+
+The user should be able to mark questions for additional review.
+
+Keep separate concepts for:
+
+* all historically incorrect questions
+* active Needs Review queue
+* mastered questions
+
+---
+
+# 12. CUSTOM DRILL
+
+Preserve and improve the existing Custom Drill interface.
+
+Support:
+
+* exam selection
+* subtest selection
+* multi-select materials
+* question count
+* difficulty
+* question status
+* challenge mode
+* estimated/actual timing
+
+Question count options:
+
+* 10
+* 15
+* 20
+* 30
+
+Difficulty:
+
+* All
+* Easy
+* Medium
+* Hard
+
+Question status:
+
+* All
+* Unanswered
+* Incorrect
+* Needs Review
+* Mastered
+
+Challenge mode:
+
+* 60 seconds per question
+
+---
+
+# 13. USER AUTHENTICATION
+
+Add a proper authentication architecture.
+
+Support:
+
+* registration
+* login
+* logout
+* persistent session
+* protected user data
+
+Prefer a clean authentication architecture that can connect to Supabase/PostgreSQL.
+
+Do not put sensitive authentication data in frontend mock state.
+
+---
+
+# 14. USER PROFILE
+
+Each user should have:
+
+* name
+* avatar/profile image
+* target institution/university
+* progress
+* statistics
+* preferences
+* theme preference
+
+---
+
+# 15. TARGET INSTITUTION
+
+Allow users to select a target institution.
+
+Examples:
+
+* PKN STAN
+* Universitas Indonesia
+* Universitas Gadjah Mada
+* Universitas Padjadjaran
+
+The system should allow the list to grow later.
+
+Display the selected target elegantly inside the profile.
+
+Visual concept:
+
+* large institution logo/background
+* low opacity
+* subtle blur
+* partially cropped
+* behind or around profile content
+* premium and minimal
+* never overpower the actual profile information
+
+Do not make it look like a badge-heavy gamification system.
+
+---
+
+# 16. PROGRESS AND ANALYTICS
+
+Track:
+
+* total questions
+* attempts
+* correct
+* incorrect
+* accuracy
+* time taken
+* estimated time
+* average time
+* streak
+* mastery
+* last practiced
+* weak materials
+* Needs Review
+
+Support:
+
+* Day
+* Week
+* Month
+* All Time
+
+Support analytics by:
+
+* exam
+* subtest
+* material
+
+---
+
+# 17. DATABASE-READY ARCHITECTURE
+
+The application must be structured so that questions and user activity can later live in a real database.
+
+Do not create architecture that requires rewriting the UI when thousands of questions are added.
+
+The intended future scale is:
+
+100 questions
+→ 1,000
+→ 5,000
+→ 10,000+
+
+The UI should remain unchanged as the question bank grows.
+
+---
+
+# 18. QUESTION IMPORT
+
+Prepare the architecture for importing questions from CSV/Excel.
+
+The future workflow should be:
+
+CSV/Excel
+→ validation
+→ preview
+→ publish
+→ question database
+
+The import system should eventually support:
+
+* exam
+* subtest
+* material
+* question type
+* difficulty
+* question
+* options
+* answer
+* explanation
+* estimated time
+* tags
+
+Do not require code changes every time new questions are added.
+
+---
+
+# 19. IMPORTANT DEVELOPMENT RULE
+
+Work incrementally.
+
+Do NOT attempt to implement the entire system in one destructive rewrite.
+
+First inspect the existing codebase and produce an implementation plan.
+
+Then implement in logical phases:
+
+PHASE 1
+
+* existing UI audit
+* data architecture
+* question model
+* question engine
+
+PHASE 2
+
+* activate SKD
+* activate all 21 SKD materials
+* functional question flow
+
+PHASE 3
+
+* activate UTBK
+* activate all seven subtests
+
+PHASE 4
+
+* add Psikotes
+* add TPA
+* add TBI
+
+PHASE 5
+
+* authentication
+* user profiles
+* persistent progress
+
+PHASE 6
+
+* target institutions
+* profile visual identity
+
+PHASE 7
+
+* analytics
+* mastery
+* Needs Review
+* adaptive drilling
+
+PHASE 8
+
+* CSV/Excel question import
+* validation
+* preview
+* publish workflow
+
+After each phase:
+
+1. run the application
+2. test affected flows
+3. fix errors
+4. preserve existing functionality
+5. create a clean Git commit
+
+Never remove working functionality without explaining why.
+
+---
+
+# 20. DO NOT DO THESE THINGS
+
+Do NOT:
+
+* rebuild from scratch
+* replace the existing visual identity
+* hardcode thousands of questions
+* create unnecessary sub-material hierarchy
+* create TPS/Tes Literasi navigation layers inside UTBK
+* force personality tests into normal right/wrong logic
+* implement everything in one huge rewrite
+* delete existing working pages
+* introduce unnecessary dependencies
+* sacrifice mobile usability
+* make the interface visually noisy
+
+---
+
+# FIRST TASK
+
+Before changing major code:
+
+1. Inspect the entire existing repository.
+2. Identify the current routes and components.
+3. Identify which pages are already implemented.
+4. Identify which parts are mock data.
+5. Identify the current question implementation.
+6. Identify the best place for the new data architecture.
+7. Identify what can be reused.
+8. Produce a concise implementation plan.
+
+Do NOT start by rebuilding the UI.
+
+After the plan is approved, begin with Phase 1.
+
+The existing FastLearner design is the baseline. Extend it rather than replacing it.
