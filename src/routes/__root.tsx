@@ -12,6 +12,7 @@ import { Home, LibraryBig, ChartNoAxesCombined, UserRound, Dumbbell } from "luci
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { ThemeProvider } from "../hooks/use-theme";
 
 function NotFoundComponent() {
   return (
@@ -121,7 +122,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
+      <ThemeProvider>
+        <div className="min-h-screen bg-background">
         <header className="sticky top-0 z-40 hidden border-b border-border/70 bg-background/90 backdrop-blur-xl md:block">
           <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-6">
             <Link to="/" className="font-display text-lg font-bold text-foreground">FastLearner<span className="text-primary">.</span></Link>
@@ -141,7 +143,8 @@ function RootComponent() {
             </Link>
           ))}
         </nav>
-      </div>
+        </div>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
