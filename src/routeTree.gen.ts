@@ -10,33 +10,78 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as LearnSkdRouteImport } from './routes/learn.skd'
+import { Route as MaterialMaterialIdRouteImport } from './routes/material.$materialId'
+import { Route as LearnSkdTiuRouteImport } from './routes/learn.skd.tiu'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnSkdRoute = LearnSkdRouteImport.update({
+  id: '/skd',
+  path: '/skd',
+  getParentRoute: () => LearnRoute,
+} as any)
+const MaterialMaterialIdRoute = MaterialMaterialIdRouteImport.update({
+  id: '/material/$materialId',
+  path: '/material/$materialId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnSkdTiuRoute = LearnSkdTiuRouteImport.update({
+  id: '/tiu',
+  path: '/tiu',
+  getParentRoute: () => LearnSkdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/learn/skd': typeof LearnSkdRouteWithChildren
+  '/material/$materialId': typeof MaterialMaterialIdRoute
+  '/learn/skd/tiu': typeof LearnSkdTiuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/learn/skd': typeof LearnSkdRouteWithChildren
+  '/material/$materialId': typeof MaterialMaterialIdRoute
+  '/learn/skd/tiu': typeof LearnSkdTiuRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/learn/skd': typeof LearnSkdRouteWithChildren
+  '/material/$materialId': typeof MaterialMaterialIdRoute
+  '/learn/skd/tiu': typeof LearnSkdTiuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/learn' | '/learn/skd' | '/material/$materialId' | '/learn/skd/tiu'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/learn' | '/learn/skd' | '/material/$materialId' | '/learn/skd/tiu'
+  id:
+    | '__root__'
+    | '/'
+    | '/learn'
+    | '/learn/skd'
+    | '/material/$materialId'
+    | '/learn/skd/tiu'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LearnRoute: typeof LearnRouteWithChildren
+  MaterialMaterialIdRoute: typeof MaterialMaterialIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +93,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/skd': {
+      id: '/learn/skd'
+      path: '/skd'
+      fullPath: '/learn/skd'
+      preLoaderRoute: typeof LearnSkdRouteImport
+      parentRoute: typeof LearnRoute
+    }
+    '/material/$materialId': {
+      id: '/material/$materialId'
+      path: '/material/$materialId'
+      fullPath: '/material/$materialId'
+      preLoaderRoute: typeof MaterialMaterialIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/skd/tiu': {
+      id: '/learn/skd/tiu'
+      path: '/tiu'
+      fullPath: '/learn/skd/tiu'
+      preLoaderRoute: typeof LearnSkdTiuRouteImport
+      parentRoute: typeof LearnSkdRoute
+    }
   }
 }
 
+interface LearnSkdRouteChildren {
+  LearnSkdTiuRoute: typeof LearnSkdTiuRoute
+}
+
+const LearnSkdRouteChildren: LearnSkdRouteChildren = {
+  LearnSkdTiuRoute: LearnSkdTiuRoute,
+}
+
+const LearnSkdRouteWithChildren = LearnSkdRoute._addFileChildren(
+  LearnSkdRouteChildren,
+)
+
+interface LearnRouteChildren {
+  LearnSkdRoute: typeof LearnSkdRouteWithChildren
+}
+
+const LearnRouteChildren: LearnRouteChildren = {
+  LearnSkdRoute: LearnSkdRouteWithChildren,
+}
+
+const LearnRouteWithChildren = LearnRoute._addFileChildren(LearnRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LearnRoute: LearnRouteWithChildren,
+  MaterialMaterialIdRoute: MaterialMaterialIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
