@@ -10,33 +10,139 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DrillRouteImport } from './routes/drill'
+import { Route as LearnRouteImport } from './routes/learn'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as QuestionRouteImport } from './routes/question'
+import { Route as LearnSkdRouteImport } from './routes/learn.skd'
+import { Route as MaterialMaterialIdRouteImport } from './routes/material.$materialId'
+import { Route as LearnSkdTiuRouteImport } from './routes/learn.skd.tiu'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DrillRoute = DrillRouteImport.update({
+  id: '/drill',
+  path: '/drill',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestionRoute = QuestionRouteImport.update({
+  id: '/question',
+  path: '/question',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnSkdRoute = LearnSkdRouteImport.update({
+  id: '/skd',
+  path: '/skd',
+  getParentRoute: () => LearnRoute,
+} as any)
+const MaterialMaterialIdRoute = MaterialMaterialIdRouteImport.update({
+  id: '/material/$materialId',
+  path: '/material/$materialId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnSkdTiuRoute = LearnSkdTiuRouteImport.update({
+  id: '/tiu',
+  path: '/tiu',
+  getParentRoute: () => LearnSkdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/drill': typeof DrillRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
+  '/question': typeof QuestionRoute
+  '/learn/skd': typeof LearnSkdRouteWithChildren
+  '/material/$materialId': typeof MaterialMaterialIdRoute
+  '/learn/skd/tiu': typeof LearnSkdTiuRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/drill': typeof DrillRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
+  '/question': typeof QuestionRoute
+  '/learn/skd': typeof LearnSkdRouteWithChildren
+  '/material/$materialId': typeof MaterialMaterialIdRoute
+  '/learn/skd/tiu': typeof LearnSkdTiuRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/drill': typeof DrillRoute
+  '/learn': typeof LearnRouteWithChildren
+  '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
+  '/question': typeof QuestionRoute
+  '/learn/skd': typeof LearnSkdRouteWithChildren
+  '/material/$materialId': typeof MaterialMaterialIdRoute
+  '/learn/skd/tiu': typeof LearnSkdTiuRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/drill'
+    | '/learn'
+    | '/profile'
+    | '/progress'
+    | '/question'
+    | '/learn/skd'
+    | '/material/$materialId'
+    | '/learn/skd/tiu'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/drill'
+    | '/learn'
+    | '/profile'
+    | '/progress'
+    | '/question'
+    | '/learn/skd'
+    | '/material/$materialId'
+    | '/learn/skd/tiu'
+  id:
+    | '__root__'
+    | '/'
+    | '/drill'
+    | '/learn'
+    | '/profile'
+    | '/progress'
+    | '/question'
+    | '/learn/skd'
+    | '/material/$materialId'
+    | '/learn/skd/tiu'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DrillRoute: typeof DrillRoute
+  LearnRoute: typeof LearnRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
+  ProgressRoute: typeof ProgressRoute
+  QuestionRoute: typeof QuestionRoute
+  MaterialMaterialIdRoute: typeof MaterialMaterialIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +154,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/drill': {
+      id: '/drill'
+      path: '/drill'
+      fullPath: '/drill'
+      preLoaderRoute: typeof DrillRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/question': {
+      id: '/question'
+      path: '/question'
+      fullPath: '/question'
+      preLoaderRoute: typeof QuestionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/skd': {
+      id: '/learn/skd'
+      path: '/skd'
+      fullPath: '/learn/skd'
+      preLoaderRoute: typeof LearnSkdRouteImport
+      parentRoute: typeof LearnRoute
+    }
+    '/material/$materialId': {
+      id: '/material/$materialId'
+      path: '/material/$materialId'
+      fullPath: '/material/$materialId'
+      preLoaderRoute: typeof MaterialMaterialIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/skd/tiu': {
+      id: '/learn/skd/tiu'
+      path: '/tiu'
+      fullPath: '/learn/skd/tiu'
+      preLoaderRoute: typeof LearnSkdTiuRouteImport
+      parentRoute: typeof LearnSkdRoute
+    }
   }
 }
 
+interface LearnSkdRouteChildren {
+  LearnSkdTiuRoute: typeof LearnSkdTiuRoute
+}
+
+const LearnSkdRouteChildren: LearnSkdRouteChildren = {
+  LearnSkdTiuRoute: LearnSkdTiuRoute,
+}
+
+const LearnSkdRouteWithChildren = LearnSkdRoute._addFileChildren(
+  LearnSkdRouteChildren,
+)
+
+interface LearnRouteChildren {
+  LearnSkdRoute: typeof LearnSkdRouteWithChildren
+}
+
+const LearnRouteChildren: LearnRouteChildren = {
+  LearnSkdRoute: LearnSkdRouteWithChildren,
+}
+
+const LearnRouteWithChildren = LearnRoute._addFileChildren(LearnRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DrillRoute: DrillRoute,
+  LearnRoute: LearnRouteWithChildren,
+  ProfileRoute: ProfileRoute,
+  ProgressRoute: ProgressRoute,
+  QuestionRoute: QuestionRoute,
+  MaterialMaterialIdRoute: MaterialMaterialIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
